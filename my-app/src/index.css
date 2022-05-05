@@ -44,6 +44,7 @@ body {
   box-shadow: 0px 4.55258px 27.2924px rgba(30, 34, 53, 0.0233553),
     0px 1.92204px 12.6198px rgba(30, 34, 53, 0.0176871);
   border-radius: 8px;
+  margin-bottom: 16px;
 }
 
 .modal {

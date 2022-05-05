@@ -3,6 +3,7 @@ import {Button, Col, DatePicker, InputNumber, Modal, Row, Select, Space} from "a
 import TextArea from "antd/lib/input/TextArea";
 import {Option} from "antd/lib/mentions";
 import moment from "moment";
+import {useState} from "react";
 
 const InputModal = ({modalOpened, setModalOpened}) => {
   const handleOk = () => {
@@ -13,6 +14,11 @@ const InputModal = ({modalOpened, setModalOpened}) => {
   };
   const handleDelete = () => {
     setModalOpened(!handleOk);
+  };
+  const [date, setDate] = useState("");
+  const handleChangeDate = (value) => {
+    setDate(value.format("DD/MM/YYYY"));
+    console.log(typeof date);
   };
   return (
     <>
@@ -49,7 +55,7 @@ const InputModal = ({modalOpened, setModalOpened}) => {
             <Col className="gutter-row" span={12}>
               <div className="member">
                 <span style={{display: "block"}}>Member</span>
-                <Select mode="multiple" allowClear style={{width: "100%"}}>
+                <Select mode="tags" placeholder="member name" style={{width: "100%"}}>
                   <Option>Rafli</Option>
                 </Select>
               </div>
@@ -60,7 +66,8 @@ const InputModal = ({modalOpened, setModalOpened}) => {
                 <DatePicker
                   defaultValue={moment("01/01/2015", "YYYY/MM/DD")}
                   format={"YYYY/MM/DD"}
-                  style={{width: "50%"}}
+                  style={{minWidth: "50%"}}
+                  onChange={handleChangeDate}
                 />
               </div>
             </Col>
@@ -69,12 +76,7 @@ const InputModal = ({modalOpened, setModalOpened}) => {
             <Col className="gutter-row" span={12}>
               <div className="tag">
                 <span style={{display: "block"}}>Tag</span>
-                <Select
-                  mode="multiple"
-                  allowClear
-                  style={{width: "100%"}}
-                  placeholder="Please select"
-                >
+                <Select mode="tags" placeholder="tag" style={{width: "100%"}}>
                   <Option>Design</Option>
                   <Option>Research</Option>
                 </Select>
@@ -84,7 +86,7 @@ const InputModal = ({modalOpened, setModalOpened}) => {
               <div className="urgency">
                 <span style={{display: "block"}}>Urgency level</span>
                 <div className="urgency-level">
-                  <InputNumber min={1} max={10} defaultValue={1} style={{width: "50%"}} />
+                  <InputNumber min={1} max={10} defaultValue={1} style={{minWidth: "50%"}} />
                 </div>
               </div>
             </Col>

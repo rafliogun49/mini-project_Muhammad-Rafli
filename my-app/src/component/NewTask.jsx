@@ -2,10 +2,30 @@ import {PlusOutlined} from "@ant-design/icons";
 import {Button, Col, Input, Row} from "antd";
 import {useState} from "react";
 
-const NewTask = () => {
+const NewTask = ({dataTask, setDataTask}) => {
   const [addNewTask, setAddNewTask] = useState(false);
+  const [title, setTitle] = useState("");
   const changeNewTaskStatus = () => {
     setAddNewTask(!addNewTask);
+  };
+
+  const handleChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const addingNewTask = (e) => {
+    e.preventDefault();
+    const newData = {
+      id: new Date().getTime(),
+      title: title,
+      tag: [""],
+      priority: null,
+      date: "",
+      member: [],
+      status: "todo",
+    };
+    setDataTask([...dataTask, newData]);
+    changeNewTaskStatus();
   };
 
   return (
@@ -14,13 +34,19 @@ const NewTask = () => {
         <div className="input-new-task">
           <Row gutter={8}>
             <Col className="gutter-row" span={20}>
-              <Input placeholder="new task" bordered={false} style={{width: "100%"}} />
+              <Input
+                placeholder="new task"
+                bordered={false}
+                style={{width: "100%"}}
+                name="title"
+                onChange={handleChange}
+              />
             </Col>
             <Col className="gutter-row">
               <Button
                 shape="circle"
                 style={{background: "#562BF7", borderRadius: "8px"}}
-                onClick={changeNewTaskStatus}
+                onClick={addingNewTask}
               >
                 <PlusOutlined style={{color: "white"}} />
               </Button>
