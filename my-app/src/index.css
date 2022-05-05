@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+body {
+  font-family: "Inter", sans-serif;
+}
+.col-secondary {
+  color: #1e2235;
+}
+.kanban-board {
+  padding: 1rem;
+}
+.card-title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+.tag-title {
+  font-size: 0.8rem;
+  color: #fff;
+  padding: 4px 8px;
+  font-weight: 700;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.g-1 {
+  gap: 8px;
+}
+.r-1 {
+  margin-right: 8px;
+}
+
+.board {
+  padding: 2rem 4rem;
+  background: #f5f7fb;
+}
+
+.kanban-card {
+  background: #fff;
+  padding: 1rem;
+  box-shadow: 0px 4.55258px 27.2924px rgba(30, 34, 53, 0.0233553),
+    0px 1.92204px 12.6198px rgba(30, 34, 53, 0.0176871);
+  border-radius: 8px;
+}
+
+.modal {
+  border-radius: 8px;
+}
+
+.input-new-task {
+  background: #fff;
+  padding: 8px 4px;
+  border-radius: 8px;
+}
