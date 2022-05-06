@@ -4,6 +4,7 @@ import {Option} from "antd/lib/mentions";
 import moment from "moment";
 import {useState} from "react";
 
+// belum digarap
 const InputModal = ({modalOpened, setModalOpened}) => {
   const handleOk = () => {
     setModalOpened(!handleOk);

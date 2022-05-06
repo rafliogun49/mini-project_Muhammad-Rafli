@@ -4,6 +4,7 @@ import KanbanBoard from "./component/KanbanBoard";
 import KanbanCard from "./component/KanbanCard";
 import TitleText from "./component/TitleText";
 
+// data dummy buat testing UI aja
 const data = [
   {
     id: 1,
