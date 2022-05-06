@@ -1,8 +1,8 @@
 import {PlusOutlined} from "@ant-design/icons";
 import {Button, Col, Input, Row} from "antd";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-const NewTask = ({dataTask, setDataTask}) => {
+const NewTask = ({addTask, name}) => {
   const [addNewTask, setAddNewTask] = useState(false);
   const [title, setTitle] = useState("");
   const changeNewTaskStatus = () => {
@@ -16,15 +16,15 @@ const NewTask = ({dataTask, setDataTask}) => {
   const addingNewTask = (e) => {
     e.preventDefault();
     const newData = {
-      id: new Date().getTime(),
       title: title,
       tag: [""],
       priority: null,
       date: "",
       member: [],
-      status: "todo",
+      status: name,
     };
-    setDataTask([...dataTask, newData]);
+    addTask(newData);
+    setTitle("");
     changeNewTaskStatus();
   };
 

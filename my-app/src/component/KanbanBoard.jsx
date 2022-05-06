@@ -1,8 +1,8 @@
-import {Row, Col, Space, Divider} from "antd";
+import {Row, Col, Divider} from "antd";
 import KanbanCard from "./KanbanCard";
 import NewTask from "./NewTask";
 import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -40,12 +40,15 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 };
 
-const KanbanBoard = ({dataTask, setDataTask}) => {
+const KanbanBoard = ({dataTask, setDataTask, addTask}) => {
   const columnsKanban = {
-    todo: {name: "Todo", items: dataTask},
-    inProgress: {name: "In Progress", items: []},
-    review: {name: "Review", items: []},
-    done: {name: "Done", items: []},
+    todo: {name: "Todo", items: dataTask.filter((data) => data.status === "todo")},
+    inProgress: {
+      name: "In Progress",
+      items: dataTask.filter((data) => data.status === "inprogress"),
+    },
+    review: {name: "Review", items: dataTask.filter((data) => data.status === "review")},
+    done: {name: "Done", items: dataTask.filter((data) => data.status === "done")},
   };
   const [columns, setColumns] = useState(columnsKanban);
   return (
@@ -64,7 +67,7 @@ const KanbanBoard = ({dataTask, setDataTask}) => {
                     <div
                       {...provided.droppableProps}
                       ref={provided.innerRef}
-                      style={{minHeight: 300}}
+                      style={{minHeight: 300, background: snapshot.isDraggingOver && "#F0F4F6"}}
                     >
                       {column.items.map((item, i) => {
                         return (
@@ -76,7 +79,7 @@ const KanbanBoard = ({dataTask, setDataTask}) => {
                                   {...provided.draggableProps}
                                   {...provided.dragHandleProps}
                                 >
-                                  <KanbanCard item={item} />
+                                  <KanbanCard item={item} name={column.name} />
                                 </div>
                               );
                             }}
@@ -88,7 +91,7 @@ const KanbanBoard = ({dataTask, setDataTask}) => {
                   );
                 }}
               </Droppable>
-              <NewTask dataTask={dataTask} setDataTask={setDataTask} />
+              <NewTask addTask={addTask} name={column.name} />
             </Col>
           );
         })}

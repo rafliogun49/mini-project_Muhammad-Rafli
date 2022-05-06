@@ -8,9 +8,9 @@ const KanbanCard = ({item}) => {
     setModalOpened(!modalOpened);
   };
 
-  const tagsComponent = item.tag.map((tag) => {
+  const tagsComponent = item.tag.map((tag, i) => {
     return (
-      <Tag color="#EF3355" style={{borderRadius: 12}}>
+      <Tag color="#EF3355" style={{borderRadius: 12}} key={i}>
         <span className="tag-title">{tag}</span>
       </Tag>
     );
@@ -40,7 +40,7 @@ const KanbanCard = ({item}) => {
 
   const memberComponent = item.member.map((member, i) => {
     return (
-      <span style={{color: "#1e2235"}}>
+      <span style={{color: "#1e2235"}} key={i}>
         {member}
         {i < item.member.length - 1 && <Divider type="vertical" style={{background: "#562BF7"}} />}
       </span>
@@ -52,7 +52,7 @@ const KanbanCard = ({item}) => {
       <div className="kanban-card" onClick={changeViewModal}>
         <Space direction="vertical" size="small" style={{display: "flex"}}>
           <div className="tags" style={{display: "flex", gap: "2px"}}>
-            {tagsComponent}
+            {item.tag && tagsComponent}
           </div>
 
           <h4 className="card-title col-secondary">{item.title}</h4>
@@ -60,20 +60,21 @@ const KanbanCard = ({item}) => {
             <div className="date">
               <Space size={8}>
                 <CalendarOutlined style={{color: "#A1A3A8"}} />
-                <span style={{color: "#1e2235"}}>{convertMonth(item.date)}</span>
+                <span style={{color: "#1e2235"}}>{item.date && convertMonth(item.date)}</span>
               </Space>
             </div>
             <div className="priority">
               <Space size={8}>
                 <RiseOutlined style={{color: "green"}} />
-                <span style={{color: "green"}}>5</span>
+                <span style={{color: "green"}}>{item.priority}</span>
               </Space>
             </div>
           </div>
           <div className="member">
             <span style={{color: "#A1A3A8"}}>Member: </span>
-            {memberComponent}
+            {item.member && memberComponent}
           </div>
+          {item.status}
         </Space>
       </div>
       <InputModal modalOpened={modalOpened} setModalOpened={setModalOpened} />
