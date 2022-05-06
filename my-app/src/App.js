@@ -1,6 +1,5 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Filter from "./component/Filter";
-import InputModal from "./component/InputModal";
 import KanbanBoard from "./component/KanbanBoard";
 import KanbanCard from "./component/KanbanCard";
 import TitleText from "./component/TitleText";

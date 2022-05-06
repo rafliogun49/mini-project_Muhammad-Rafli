@@ -1,4 +1,3 @@
-import {RiseOutlined} from "@ant-design/icons";
 import {Button, Col, DatePicker, InputNumber, Modal, Row, Select, Space} from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import {Option} from "antd/lib/mentions";

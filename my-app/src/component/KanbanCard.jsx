@@ -58,21 +58,24 @@ const KanbanCard = ({item}) => {
           <h4 className="card-title col-secondary">{item.title}</h4>
           <div className="date-n-priority flex">
             <div className="date">
-              <Space size={8}>
-                <CalendarOutlined style={{color: "#A1A3A8"}} />
-                <span style={{color: "#1e2235"}}>{item.date && convertMonth(item.date)}</span>
-              </Space>
+              {item.date && (
+                <Space size={8}>
+                  <CalendarOutlined style={{color: "#A1A3A8"}} />
+                  <span style={{color: "#1e2235"}}>{convertMonth(item.date)}</span>
+                </Space>
+              )}
             </div>
             <div className="priority">
-              <Space size={8}>
-                <RiseOutlined style={{color: "green"}} />
-                <span style={{color: "green"}}>{item.priority}</span>
-              </Space>
+              {item.priority && (
+                <Space size={8}>
+                  <RiseOutlined style={{color: "green"}} />
+                  <span style={{color: "green"}}>{item.priority}</span>
+                </Space>
+              )}
             </div>
           </div>
           <div className="member">
-            <span style={{color: "#A1A3A8"}}>Member: </span>
-            {item.member && memberComponent}
+            {item.member && <span style={{color: "#A1A3A8"}}>Member: {memberComponent}</span>}
           </div>
           {item.status}
         </Space>

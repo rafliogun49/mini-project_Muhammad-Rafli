@@ -2,7 +2,7 @@ import {Row, Col, Divider} from "antd";
 import KanbanCard from "./KanbanCard";
 import NewTask from "./NewTask";
 import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -41,6 +41,7 @@ const onDragEnd = (result, columns, setColumns) => {
 };
 
 const KanbanBoard = ({dataTask, setDataTask, addTask}) => {
+  // bagian items di variabel columnsKanban ini ga mau update data setiap ada perubahan di dataTask
   const columnsKanban = {
     todo: {name: "Todo", items: dataTask.filter((data) => data.status === "todo")},
     inProgress: {
@@ -50,6 +51,8 @@ const KanbanBoard = ({dataTask, setDataTask, addTask}) => {
     review: {name: "Review", items: dataTask.filter((data) => data.status === "review")},
     done: {name: "Done", items: dataTask.filter((data) => data.status === "done")},
   };
+  // problemnya sampe sini
+
   const [columns, setColumns] = useState(columnsKanban);
   return (
     <DragDropContext onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
