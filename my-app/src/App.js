@@ -13,7 +13,7 @@ const data = [
     priority: 5,
     date: "20/05/2022",
     member: ["Rafli", "Asep"],
-    status: "todo",
+    status: "Todo",
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ const data = [
     priority: 8,
     date: "29/05/2022",
     member: ["Ilham"],
-    status: "review",
+    status: "Review",
   },
   {
     id: 3,
@@ -31,7 +31,7 @@ const data = [
     priority: 8,
     date: "29/05/2022",
     member: ["Ilham", "Kurniawan", "Kurniadi"],
-    status: "inprogress",
+    status: "In Progress",
   },
   {
     id: 4,
@@ -40,7 +40,7 @@ const data = [
     priority: 8,
     date: "30/05/2022",
     member: ["Ilham", "Kurniawan", "Kurniadi"],
-    status: "inprogress",
+    status: "In Progress",
   },
 ];
 
