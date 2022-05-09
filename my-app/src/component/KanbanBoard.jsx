@@ -4,45 +4,8 @@ import NewTask from "./NewTask";
 import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
 import {useEffect, useState} from "react";
 
-//ini buat drag n dropnya aja
-const onDragEnd = (result, columns, setColumns) => {
-  if (!result.destination) return;
-  const {source, destination} = result;
-  if (source.droppableId !== destination.droppableId) {
-    const sourceColumn = columns[source.droppableId];
-    const destinationColumn = columns[destination.droppableId];
-    const sourceItems = [...sourceColumn.items];
-    const destinationitems = [...destinationColumn.items];
-    const [removed] = sourceItems.splice(source.index, 1);
-    destinationitems.splice(destination.index, 0, removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...sourceColumn,
-        items: sourceItems,
-      },
-      [destination.droppableId]: {
-        ...destinationColumn,
-        items: destinationitems,
-      },
-    });
-  } else {
-    const column = columns[source.droppableId];
-    const copiedItems = [...column.items];
-    const [removed] = copiedItems.splice(source.index, 1);
-    copiedItems.splice(destination.index, 0, removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...column,
-        items: copiedItems,
-      },
-    });
-  }
-};
-
 //ngambilin data berdasarkan kolomnya
-const KanbanBoard = ({dataTask, setDataTask, addTask}) => {
+const KanbanBoard = ({dataTask, setDataTask, addTask, tagList, peopleList}) => {
   const [columns, setColumns] = useState({});
   // bagian items di variabel columnsKanban ini ga mau update data setiap ada perubahan di dataTask
   useEffect(() => {
@@ -58,7 +21,45 @@ const KanbanBoard = ({dataTask, setDataTask, addTask}) => {
     setColumns(columnsKanban);
   }, [dataTask]);
   // problemnya sampe sini
-
+  const onDragEnd = (result, columns, setColumns) => {
+    if (!result.destination) return;
+    const {source, destination} = result;
+    if (source.droppableId !== destination.droppableId) {
+      const sourceColumn = columns[source.droppableId];
+      const destinationColumn = columns[destination.droppableId];
+      const sourceItems = [...sourceColumn.items];
+      const destinationItems = [...destinationColumn.items];
+      const [removed] = sourceItems.splice(source.index, 1);
+      destinationItems.splice(destination.index, 0, removed);
+      destinationItems.map((dest) => {
+        return (dest.status = columns[destination.droppableId].name);
+      });
+      console.log(dataTask);
+      setColumns({
+        ...columns,
+        [source.droppableId]: {
+          ...sourceColumn,
+          items: sourceItems,
+        },
+        [destination.droppableId]: {
+          ...destinationColumn,
+          items: destinationItems,
+        },
+      });
+    } else {
+      const column = columns[source.droppableId];
+      const copiedItems = [...column.items];
+      const [removed] = copiedItems.splice(source.index, 1);
+      copiedItems.splice(destination.index, 0, removed);
+      setColumns({
+        ...columns,
+        [source.droppableId]: {
+          ...column,
+          items: copiedItems,
+        },
+      });
+    }
+  };
   return (
     //buat wadah drag n dropnya
     <DragDropContext onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
@@ -91,7 +92,11 @@ const KanbanBoard = ({dataTask, setDataTask, addTask}) => {
                                   {...provided.draggableProps}
                                   {...provided.dragHandleProps}
                                 >
-                                  <KanbanCard item={item} name={column.name} />
+                                  <KanbanCard
+                                    item={item}
+                                    tagList={tagList}
+                                    peopleList={peopleList}
+                                  />
                                 </div>
                               );
                             }}

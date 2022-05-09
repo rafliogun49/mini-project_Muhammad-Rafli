@@ -1,14 +1,18 @@
 import {Divider, Space, Tag} from "antd";
 import {CalendarOutlined, RiseOutlined} from "@ant-design/icons";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import InputModal from "./InputModal";
-const KanbanCard = ({item}) => {
+const KanbanCard = ({item, tagList, peopleList}) => {
   const [modalOpened, setModalOpened] = useState(false);
+  const [updateData, setUpdateData] = useState(item);
   const changeViewModal = () => {
     setModalOpened(!modalOpened);
   };
+  useEffect(() => {
+    setUpdateData(updateData);
+  }, [updateData]);
 
-  const tagsComponent = item.tag.map((tag, i) => {
+  const tagsComponent = updateData.tag.map((tag, i) => {
     return (
       <Tag color="#EF3355" style={{borderRadius: 12}} key={i}>
         <span className="tag-title">{tag}</span>
@@ -38,11 +42,13 @@ const KanbanCard = ({item}) => {
     return `${split[0]} ${monthName} ${split[2]}`;
   };
 
-  const memberComponent = item.member.map((member, i) => {
+  const memberComponent = updateData.member.map((member, i) => {
     return (
       <span style={{color: "#1e2235"}} key={i}>
         {member}
-        {i < item.member.length - 1 && <Divider type="vertical" style={{background: "#562BF7"}} />}
+        {i < updateData.member.length - 1 && (
+          <Divider type="vertical" style={{background: "#562BF7"}} />
+        )}
       </span>
     );
   });
@@ -52,35 +58,42 @@ const KanbanCard = ({item}) => {
       <div className="kanban-card" onClick={changeViewModal}>
         <Space direction="vertical" size="small" style={{display: "flex"}}>
           <div className="tags" style={{display: "flex", gap: "2px"}}>
-            {item.tag && tagsComponent}
+            {updateData.tag && tagsComponent}
           </div>
 
-          <h4 className="card-title col-secondary">{item.title}</h4>
+          <h4 className="card-title col-secondary">{updateData.title}</h4>
           <div className="date-n-priority flex">
             <div className="date">
-              {item.date && (
+              {updateData.date && (
                 <Space size={8}>
                   <CalendarOutlined style={{color: "#A1A3A8"}} />
-                  <span style={{color: "#1e2235"}}>{convertMonth(item.date)}</span>
+                  <span style={{color: "#1e2235"}}>{convertMonth(updateData.date)}</span>
                 </Space>
               )}
             </div>
             <div className="priority">
-              {item.priority && (
+              {updateData.priority && (
                 <Space size={8}>
                   <RiseOutlined style={{color: "green"}} />
-                  <span style={{color: "green"}}>{item.priority}</span>
+                  <span style={{color: "green"}}>{updateData.priority}</span>
                 </Space>
               )}
             </div>
           </div>
           <div className="member">
-            {item.member && <span style={{color: "#A1A3A8"}}>Member: {memberComponent}</span>}
+            {updateData.member && <span style={{color: "#A1A3A8"}}>Member: {memberComponent}</span>}
           </div>
-          {item.status}
+          {updateData.status}
         </Space>
       </div>
-      <InputModal modalOpened={modalOpened} setModalOpened={setModalOpened} />
+      <InputModal
+        modalOpened={modalOpened}
+        setModalOpened={setModalOpened}
+        updateData={updateData}
+        setUpdateData={setUpdateData}
+        tagList={tagList}
+        peopleList={peopleList}
+      />
     </>
   );
 };

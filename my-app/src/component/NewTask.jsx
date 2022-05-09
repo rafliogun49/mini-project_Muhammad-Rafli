@@ -22,6 +22,7 @@ const NewTask = ({addTask, name}) => {
       date: null,
       member: [],
       status: name,
+      description: "",
     };
     addTask(newData);
     setTitle("");

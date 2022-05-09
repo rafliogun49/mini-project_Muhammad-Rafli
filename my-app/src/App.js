@@ -14,6 +14,7 @@ const data = [
     date: "20/05/2022",
     member: ["Rafli", "Asep"],
     status: "Todo",
+    description: "",
   },
   {
     id: 2,
@@ -23,6 +24,7 @@ const data = [
     date: "29/05/2022",
     member: ["Ilham"],
     status: "Review",
+    description: "",
   },
   {
     id: 3,
@@ -32,6 +34,7 @@ const data = [
     date: "29/05/2022",
     member: ["Ilham", "Kurniawan", "Kurniadi"],
     status: "In Progress",
+    description: "",
   },
   {
     id: 4,
@@ -41,8 +44,12 @@ const data = [
     date: "30/05/2022",
     member: ["Ilham", "Kurniawan", "Kurniadi"],
     status: "In Progress",
+    description: "",
   },
 ];
+
+const tagList = ["Development", "Design", "Research", "Coordination", "Testing"];
+const peopleList = ["Rafli", "Eka", "Kurniawan", "Asep"];
 
 function App() {
   const [dataTask, setDataTask] = useState(data);
@@ -55,11 +62,17 @@ function App() {
     <>
       <TitleText />
       <Filter />
-      <KanbanBoard dataTask={dataTask} setDataTask={setDataTask} addTask={addTask} />
+      <KanbanBoard
+        dataTask={dataTask}
+        setDataTask={setDataTask}
+        addTask={addTask}
+        tagList={tagList}
+        peopleList={peopleList}
+      />
       {/* code di bawah cuma buat cek datanya udah masuk atau belum */}
-      {dataTask.map((data) => (
+      {/* {dataTask.map((data) => (
         <KanbanCard item={data} key={data.id} />
-      ))}
+      ))} */}
     </>
   );
 }

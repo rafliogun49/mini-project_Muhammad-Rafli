@@ -1,13 +1,22 @@
 import {Button, Col, DatePicker, InputNumber, Modal, Row, Select, Space} from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import {Option} from "antd/lib/mentions";
 import moment from "moment";
 import {useState} from "react";
 
+const {Option} = Select;
+
 // belum digarap
-const InputModal = ({modalOpened, setModalOpened}) => {
+const InputModal = ({
+  modalOpened,
+  setModalOpened,
+  updateData,
+  setUpdateData,
+  tagList,
+  peopleList,
+}) => {
   const handleOk = () => {
     setModalOpened(!handleOk);
+    console.log(updateData);
   };
   const handleCancel = () => {
     setModalOpened(!handleOk);
@@ -15,15 +24,49 @@ const InputModal = ({modalOpened, setModalOpened}) => {
   const handleDelete = () => {
     setModalOpened(!handleOk);
   };
-  const [date, setDate] = useState("");
+
+  const peopleOptions = peopleList.map((people) => <Option value={people}>{people}</Option>);
+  const tagOptions = tagList.map((tag) => <Option value={tag}>{tag}</Option>);
+
   const handleChangeDate = (value) => {
-    setDate(value.format("DD/MM/YYYY"));
-    console.log(typeof date);
+    setUpdateData({
+      ...updateData,
+      date: value.format("DD/MM/YYYY"),
+    });
   };
+
+  const handleChangeDescription = ({target: {value}}) => {
+    setUpdateData({
+      ...updateData,
+      description: value,
+    });
+  };
+
+  const handleChangeMember = (value) => {
+    setUpdateData({
+      ...updateData,
+      member: value,
+    });
+  };
+
+  const handleChangeTag = (value) => {
+    setUpdateData({
+      ...updateData,
+      tag: value,
+    });
+  };
+
+  const handleChangePriority = (value) => {
+    setUpdateData({
+      ...updateData,
+      priority: value,
+    });
+  };
+
   return (
     <>
       <Modal
-        title="Membuat fitur-fitur pada Kanban untuk tugas weekly 2"
+        title={updateData.title}
         visible={modalOpened}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -49,14 +92,25 @@ const InputModal = ({modalOpened, setModalOpened}) => {
         <Space direction="vertical" size="middle" style={{display: "flex"}}>
           <div className="description-box">
             <span style={{display: "block"}}>Description</span>
-            <TextArea placeholder="Details...." autoSize={{minRows: 3, maxRows: 5}} />
+            <TextArea
+              placeholder="Details...."
+              autoSize={{minRows: 3, maxRows: 5}}
+              onChange={handleChangeDescription}
+              defaultValue={updateData.description}
+            />
           </div>
           <Row gutter={32}>
             <Col className="gutter-row" span={12}>
               <div className="member">
                 <span style={{display: "block"}}>Member</span>
-                <Select mode="tags" placeholder="member name" style={{width: "100%"}}>
-                  <Option>Rafli</Option>
+                <Select
+                  mode="tags"
+                  placeholder="member name"
+                  style={{width: "100%"}}
+                  name="member"
+                  onChange={handleChangeMember}
+                >
+                  {peopleOptions}
                 </Select>
               </div>
             </Col>
@@ -68,6 +122,7 @@ const InputModal = ({modalOpened, setModalOpened}) => {
                   format={"YYYY/MM/DD"}
                   style={{minWidth: "50%"}}
                   onChange={handleChangeDate}
+                  name="date"
                 />
               </div>
             </Col>
@@ -76,9 +131,14 @@ const InputModal = ({modalOpened, setModalOpened}) => {
             <Col className="gutter-row" span={12}>
               <div className="tag">
                 <span style={{display: "block"}}>Tag</span>
-                <Select mode="tags" placeholder="tag" style={{width: "100%"}}>
-                  <Option>Design</Option>
-                  <Option>Research</Option>
+                <Select
+                  mode="tags"
+                  placeholder="tag"
+                  style={{width: "100%"}}
+                  name="tag"
+                  onChange={handleChangeTag}
+                >
+                  {tagOptions}
                 </Select>
               </div>
             </Col>
@@ -86,7 +146,14 @@ const InputModal = ({modalOpened, setModalOpened}) => {
               <div className="urgency">
                 <span style={{display: "block"}}>Urgency level</span>
                 <div className="urgency-level">
-                  <InputNumber min={1} max={10} defaultValue={1} style={{minWidth: "50%"}} />
+                  <InputNumber
+                    min={1}
+                    max={10}
+                    defaultValue={1}
+                    style={{minWidth: "50%"}}
+                    name="priority"
+                    onChange={handleChangePriority}
+                  />
                 </div>
               </div>
             </Col>
