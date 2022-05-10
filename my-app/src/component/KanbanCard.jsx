@@ -2,7 +2,7 @@ import {Divider, Space, Tag} from "antd";
 import {CalendarOutlined, RiseOutlined} from "@ant-design/icons";
 import {useEffect, useState} from "react";
 import InputModal from "./InputModal";
-const KanbanCard = ({item, tagList, peopleList}) => {
+const KanbanCard = ({item, tagList, peopleList, dataTask, updateTask}) => {
   const [modalOpened, setModalOpened] = useState(false);
   const [updateData, setUpdateData] = useState(item);
   const changeViewModal = () => {
@@ -83,7 +83,6 @@ const KanbanCard = ({item, tagList, peopleList}) => {
           <div className="member">
             {updateData.member && <span style={{color: "#A1A3A8"}}>Member: {memberComponent}</span>}
           </div>
-          {updateData.status}
         </Space>
       </div>
       <InputModal
@@ -93,6 +92,8 @@ const KanbanCard = ({item, tagList, peopleList}) => {
         setUpdateData={setUpdateData}
         tagList={tagList}
         peopleList={peopleList}
+        dataTask={dataTask}
+        updateTask={updateTask}
       />
     </>
   );

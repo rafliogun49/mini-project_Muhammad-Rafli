@@ -5,9 +5,10 @@ import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
 import {useEffect, useState} from "react";
 
 //ngambilin data berdasarkan kolomnya
-const KanbanBoard = ({dataTask, setDataTask, addTask, tagList, peopleList}) => {
+const KanbanBoard = ({dataTask, setDataTask, addTask, tagList, peopleList, updateTask}) => {
   const [columns, setColumns] = useState({});
   // bagian items di variabel columnsKanban ini ga mau update data setiap ada perubahan di dataTask
+
   useEffect(() => {
     const columnsKanban = {
       todo: {name: "Todo", items: dataTask.filter((data) => data.status === "Todo")},
@@ -20,6 +21,7 @@ const KanbanBoard = ({dataTask, setDataTask, addTask, tagList, peopleList}) => {
     };
     setColumns(columnsKanban);
   }, [dataTask]);
+
   // problemnya sampe sini
   const onDragEnd = (result, columns, setColumns) => {
     if (!result.destination) return;
@@ -31,10 +33,9 @@ const KanbanBoard = ({dataTask, setDataTask, addTask, tagList, peopleList}) => {
       const destinationItems = [...destinationColumn.items];
       const [removed] = sourceItems.splice(source.index, 1);
       destinationItems.splice(destination.index, 0, removed);
-      destinationItems.map((dest) => {
+      destinationItems.forEach((dest) => {
         return (dest.status = columns[destination.droppableId].name);
       });
-      console.log(dataTask);
       setColumns({
         ...columns,
         [source.droppableId]: {
@@ -96,6 +97,8 @@ const KanbanBoard = ({dataTask, setDataTask, addTask, tagList, peopleList}) => {
                                     item={item}
                                     tagList={tagList}
                                     peopleList={peopleList}
+                                    dataTask={dataTask}
+                                    updateTask={updateTask}
                                   />
                                 </div>
                               );

@@ -1,11 +1,9 @@
 import {Button, Col, DatePicker, InputNumber, Modal, Row, Select, Space} from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
-import {useState} from "react";
 
 const {Option} = Select;
 
-// belum digarap
 const InputModal = ({
   modalOpened,
   setModalOpened,
@@ -13,10 +11,13 @@ const InputModal = ({
   setUpdateData,
   tagList,
   peopleList,
+  dataTask,
+  updateTask,
 }) => {
   const handleOk = () => {
     setModalOpened(!handleOk);
-    console.log(updateData);
+    updateTask(updateData);
+    console.log(dataTask);
   };
   const handleCancel = () => {
     setModalOpened(!handleOk);
@@ -109,6 +110,7 @@ const InputModal = ({
                   style={{width: "100%"}}
                   name="member"
                   onChange={handleChangeMember}
+                  defaultValue={updateData.member}
                 >
                   {peopleOptions}
                 </Select>
@@ -118,7 +120,7 @@ const InputModal = ({
               <div className="date">
                 <span style={{display: "block"}}>Date</span>
                 <DatePicker
-                  defaultValue={moment("01/01/2015", "YYYY/MM/DD")}
+                  defaultValue={updateData.date ? moment(updateData.date, "DD/MM/YYYY") : moment()}
                   format={"YYYY/MM/DD"}
                   style={{minWidth: "50%"}}
                   onChange={handleChangeDate}
@@ -137,6 +139,7 @@ const InputModal = ({
                   style={{width: "100%"}}
                   name="tag"
                   onChange={handleChangeTag}
+                  defaultValue={updateData.tag}
                 >
                   {tagOptions}
                 </Select>
@@ -153,6 +156,7 @@ const InputModal = ({
                     style={{minWidth: "50%"}}
                     name="priority"
                     onChange={handleChangePriority}
+                    value={updateData.priority}
                   />
                 </div>
               </div>

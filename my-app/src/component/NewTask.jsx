@@ -16,6 +16,7 @@ const NewTask = ({addTask, name}) => {
   const addingNewTask = (e) => {
     e.preventDefault();
     const newData = {
+      id: Date.now(),
       title: title,
       tag: [],
       priority: null,
