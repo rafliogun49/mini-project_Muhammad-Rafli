@@ -2,7 +2,20 @@ import {Divider, Space, Tag} from "antd";
 import {CalendarOutlined, RiseOutlined} from "@ant-design/icons";
 import {useEffect, useState} from "react";
 import InputModal from "./InputModal";
-const KanbanCard = ({item, tagList, peopleList, dataTask, updateTask}) => {
+const KanbanCard = ({
+  item,
+  tagList,
+  peopleList,
+  dataTask,
+  updateTask,
+  deleteTask,
+  updateTags,
+  updatePeoples,
+  loadingDeleteTask,
+  uniquePeopleList,
+  getTagList,
+  addingPeople,
+}) => {
   const [modalOpened, setModalOpened] = useState(false);
   const [updateData, setUpdateData] = useState(item);
   const changeViewModal = () => {
@@ -12,10 +25,10 @@ const KanbanCard = ({item, tagList, peopleList, dataTask, updateTask}) => {
     setUpdateData(updateData);
   }, [updateData]);
 
-  const tagsComponent = updateData.tag.map((tag, i) => {
+  const tagsComponent = updateData?.card_tag.map((tag, i) => {
     return (
       <Tag color="#EF3355" style={{borderRadius: 12}} key={i}>
-        <span className="tag-title">{tag}</span>
+        <span className="tag-title">{tag.tag}</span>
       </Tag>
     );
   });
@@ -42,23 +55,25 @@ const KanbanCard = ({item, tagList, peopleList, dataTask, updateTask}) => {
     return `${split[0]} ${monthName} ${split[2]}`;
   };
 
-  const memberComponent = updateData.member.map((member, i) => {
+  const memberComponent = updateData?.card_people.map((member, i) => {
     return (
-      <span style={{color: "#1e2235"}} key={i}>
-        {member}
-        {i < updateData.member.length - 1 && (
-          <Divider type="vertical" style={{background: "#562BF7"}} />
-        )}
-      </span>
+      <>
+        <span style={{color: "#1e2235"}} key={i}>
+          {member.people}
+          {i < updateData.card_people.length - 1 && (
+            <Divider type="vertical" style={{background: "#562BF7"}} />
+          )}
+        </span>
+      </>
     );
   });
 
   return (
     <>
       <div className="kanban-card" onClick={changeViewModal}>
-        <Space direction="vertical" size="small" style={{display: "flex"}}>
+        <Space direction="vertical" size={4} style={{display: "flex"}}>
           <div className="tags" style={{display: "flex", gap: "2px"}}>
-            {updateData.tag && tagsComponent}
+            {updateData?.card_tag && tagsComponent}
           </div>
 
           <h4 className="card-title col-secondary">{updateData.title}</h4>
@@ -80,9 +95,15 @@ const KanbanCard = ({item, tagList, peopleList, dataTask, updateTask}) => {
               )}
             </div>
           </div>
-          <div className="member">
-            {updateData.member && <span style={{color: "#A1A3A8"}}>Member: {memberComponent}</span>}
-          </div>
+          {updateData?.card_people && (
+            <div className="member" style={{width: "100%"}}>
+              {updateData?.card_people && (
+                <span style={{color: "#A1A3A8", overflow: "hidden"}}>
+                  Member: {memberComponent}
+                </span>
+              )}
+            </div>
+          )}
         </Space>
       </div>
       <InputModal
@@ -90,10 +111,15 @@ const KanbanCard = ({item, tagList, peopleList, dataTask, updateTask}) => {
         setModalOpened={setModalOpened}
         updateData={updateData}
         setUpdateData={setUpdateData}
-        tagList={tagList}
-        peopleList={peopleList}
         dataTask={dataTask}
         updateTask={updateTask}
+        deleteTask={deleteTask}
+        updateTags={updateTags}
+        updatePeoples={updatePeoples}
+        loadingDeleteTask={loadingDeleteTask}
+        uniquePeopleList={uniquePeopleList}
+        getTagList={getTagList}
+        addingPeople={addingPeople}
       />
     </>
   );

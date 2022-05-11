@@ -1,9 +1,12 @@
 import {PlusOutlined} from "@ant-design/icons";
-import {Button, Col, Input, Row} from "antd";
+import {Button, Col, Input, message, Row} from "antd";
 import {useState} from "react";
 
 const NewTask = ({addTask, name}) => {
   const [addNewTask, setAddNewTask] = useState(false);
+  const loadingMessage = () => {
+    message.loading("Sedang diupload");
+  };
   const [title, setTitle] = useState("");
   const changeNewTaskStatus = () => {
     setAddNewTask(!addNewTask);
@@ -15,19 +18,14 @@ const NewTask = ({addTask, name}) => {
 
   const addingNewTask = (e) => {
     e.preventDefault();
-    const newData = {
-      id: Date.now(),
-      title: title,
-      tag: [],
-      priority: null,
-      date: null,
-      member: [],
-      status: name,
-      description: "",
-    };
-    addTask(newData);
-    setTitle("");
-    changeNewTaskStatus();
+    if (!title) {
+      message.error("Judul tidak boleh kosong");
+    } else {
+      addTask(title, name);
+      loadingMessage();
+      setTitle("");
+      changeNewTaskStatus();
+    }
   };
 
   return (
@@ -42,6 +40,7 @@ const NewTask = ({addTask, name}) => {
                 style={{width: "100%"}}
                 name="title"
                 onChange={handleChange}
+                onPressEnter={addingNewTask}
               />
             </Col>
             <Col className="gutter-row">

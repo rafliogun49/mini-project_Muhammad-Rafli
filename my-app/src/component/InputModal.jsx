@@ -1,33 +1,75 @@
-import {Button, Col, DatePicker, InputNumber, Modal, Row, Select, Space} from "antd";
+import {Button, Col, DatePicker, InputNumber, message, Modal, Row, Select, Space} from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
+import {useEffect} from "react";
 
 const {Option} = Select;
+
+const extractPeopleValue = (val) => {
+  let value = [];
+  for (let index = 0; index < val.length; index++) {
+    let element = val[index].people;
+    value.push(element);
+  }
+  return value;
+};
+
+const extractTagValue = (val) => {
+  let value = [];
+  for (let index = 0; index < val.length; index++) {
+    let element = val[index].tag;
+    value.push(element);
+  }
+  return value;
+};
 
 const InputModal = ({
   modalOpened,
   setModalOpened,
   updateData,
   setUpdateData,
-  tagList,
-  peopleList,
-  dataTask,
   updateTask,
+  deleteTask,
+  updateTags,
+  updatePeoples,
+  loadingDeleteTask,
+  uniquePeopleList,
+  getTagList,
+  addingPeople,
 }) => {
+  const loadingDelete = () => {
+    message.loading("Sedang menghapus task");
+  };
   const handleOk = () => {
     setModalOpened(!handleOk);
-    updateTask(updateData);
-    console.log(dataTask);
+    message.success("Data telah disimpan");
+    updateTask(
+      updateData.id,
+      updateData.priority,
+      updateData.description,
+      updateData.date,
+      updateData.status
+    );
+    // updateData.card_people.map((people) => {
+    //   return addingPeople(updateData.id, people.people);
+    // });
   };
   const handleCancel = () => {
     setModalOpened(!handleOk);
   };
   const handleDelete = () => {
     setModalOpened(!handleOk);
+    deleteTask(updateData.id);
+    loadingDelete();
   };
 
-  const peopleOptions = peopleList.map((people) => <Option value={people}>{people}</Option>);
-  const tagOptions = tagList.map((tag) => <Option value={tag}>{tag}</Option>);
+  const peopleList = extractPeopleValue(uniquePeopleList);
+
+  const tagList = extractTagValue(getTagList);
+  const uniquePeoples = [...new Set(peopleList)];
+  const uniqueTags = [...new Set(tagList)];
+  const peopleOptions = uniquePeoples.map((people) => <Option value={people}>{people}</Option>);
+  const tagOptions = uniqueTags.map((tag) => <Option value={tag}>{tag}</Option>);
 
   const handleChangeDate = (value) => {
     setUpdateData({
@@ -44,6 +86,7 @@ const InputModal = ({
   };
 
   const handleChangeMember = (value) => {
+    updatePeoples(value);
     setUpdateData({
       ...updateData,
       member: value,
@@ -51,10 +94,15 @@ const InputModal = ({
   };
 
   const handleChangeTag = (value) => {
-    setUpdateData({
-      ...updateData,
-      tag: value,
-    });
+    if (value.length > 1) {
+      message.error("Tag tidak boleh lebih dari 1");
+    } else {
+      updateTags(value);
+      setUpdateData({
+        ...updateData,
+        tag: value,
+      });
+    }
   };
 
   const handleChangePriority = (value) => {
@@ -110,7 +158,7 @@ const InputModal = ({
                   style={{width: "100%"}}
                   name="member"
                   onChange={handleChangeMember}
-                  defaultValue={updateData.member}
+                  defaultValue={updateData.card_people.map((v) => v.people)}
                 >
                   {peopleOptions}
                 </Select>
@@ -139,7 +187,7 @@ const InputModal = ({
                   style={{width: "100%"}}
                   name="tag"
                   onChange={handleChangeTag}
-                  defaultValue={updateData.tag}
+                  defaultValue={updateData.card_tag.map((v) => v.tag)}
                 >
                   {tagOptions}
                 </Select>

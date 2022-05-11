@@ -34,8 +34,12 @@ body {
 }
 
 .board {
-  padding: 2rem 4rem;
+  padding: 2rem;
   background: #f5f7fb;
+  display: flex;
+  gap: 2rem;
+  overflow: auto;
+  white-space: nowrap;
 }
 
 .kanban-card {
@@ -45,6 +49,7 @@ body {
     0px 1.92204px 12.6198px rgba(30, 34, 53, 0.0176871);
   border-radius: 8px;
   margin-bottom: 16px;
+  width: 100%;
 }
 
 .modal {
@@ -55,4 +60,13 @@ body {
   background: #fff;
   padding: 8px 4px;
   border-radius: 8px;
+}
+
+.column {
+  min-width: calc(100vw / 4 - 2.5rem);
+}
+@media (max-width: 900px) {
+  .column {
+    min-width: 250px;
+  }
 }
