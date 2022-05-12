@@ -18,6 +18,7 @@ const KanbanBoard = ({
   uniquePeopleList,
   getTagList,
   addingPeople,
+  loadingUpdateCard,
 }) => {
   const [columns, setColumns] = useState({});
   // bagian items di variabel columnsKanban ini ga mau update data setiap ada perubahan di dataTask
@@ -120,6 +121,7 @@ const KanbanBoard = ({
                                     uniquePeopleList={uniquePeopleList}
                                     getTagList={getTagList}
                                     addingPeople={addingPeople}
+                                    loadingUpdateCard={loadingUpdateCard}
                                   />
                                 </div>
                               );

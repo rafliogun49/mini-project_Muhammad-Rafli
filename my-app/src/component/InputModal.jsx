@@ -7,7 +7,7 @@ const {Option} = Select;
 
 const extractPeopleValue = (val) => {
   let value = [];
-  for (let index = 0; index < val.length; index++) {
+  for (let index = 0; index < val?.length; index++) {
     let element = val[index].people;
     value.push(element);
   }
@@ -16,13 +16,22 @@ const extractPeopleValue = (val) => {
 
 const extractTagValue = (val) => {
   let value = [];
-  for (let index = 0; index < val.length; index++) {
+  for (let index = 0; index < val?.length; index++) {
     let element = val[index].tag;
     value.push(element);
   }
   return value;
 };
 
+const updateLoading = () => {
+  message.loading("Sedang memperbaharui data");
+};
+const loadingDelete = () => {
+  message.loading("Sedang menghapus task");
+};
+const alert = () => {
+  message.error("Tag tidak boleh lebih dari 2");
+};
 const InputModal = ({
   modalOpened,
   setModalOpened,
@@ -36,13 +45,10 @@ const InputModal = ({
   uniquePeopleList,
   getTagList,
   addingPeople,
+  loadingUpdateCard,
 }) => {
-  const loadingDelete = () => {
-    message.loading("Sedang menghapus task");
-  };
   const handleOk = () => {
     setModalOpened(!handleOk);
-    message.success("Data telah disimpan");
     updateTask(
       updateData.id,
       updateData.priority,
@@ -50,10 +56,9 @@ const InputModal = ({
       updateData.date,
       updateData.status
     );
-    // updateData.card_people.map((people) => {
-    //   return addingPeople(updateData.id, people.people);
-    // });
+    updateLoading();
   };
+
   const handleCancel = () => {
     setModalOpened(!handleOk);
   };
@@ -68,8 +73,16 @@ const InputModal = ({
   const tagList = extractTagValue(getTagList);
   const uniquePeoples = [...new Set(peopleList)];
   const uniqueTags = [...new Set(tagList)];
-  const peopleOptions = uniquePeoples.map((people) => <Option value={people}>{people}</Option>);
-  const tagOptions = uniqueTags.map((tag) => <Option value={tag}>{tag}</Option>);
+  const peopleOptions = uniquePeoples.map((people) => (
+    <Option value={people} key={people}>
+      {people}
+    </Option>
+  ));
+  const tagOptions = uniqueTags.map((tag) => (
+    <Option value={tag} key={tag}>
+      {tag}
+    </Option>
+  ));
 
   const handleChangeDate = (value) => {
     setUpdateData({
@@ -86,22 +99,22 @@ const InputModal = ({
   };
 
   const handleChangeMember = (value) => {
-    updatePeoples(value);
-    setUpdateData({
-      ...updateData,
-      member: value,
-    });
+    updatePeoples(
+      updateData.id,
+      value,
+      updateData.card_people.map((v) => v.people)
+    );
   };
 
   const handleChangeTag = (value) => {
-    if (value.length > 1) {
-      message.error("Tag tidak boleh lebih dari 1");
+    if (value.length > 2) {
+      alert();
     } else {
-      updateTags(value);
-      setUpdateData({
-        ...updateData,
-        tag: value,
-      });
+      updateTags(
+        updateData.id,
+        value,
+        updateData.card_tag.map((v) => v.tag)
+      );
     }
   };
 

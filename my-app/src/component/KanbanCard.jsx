@@ -15,6 +15,7 @@ const KanbanCard = ({
   uniquePeopleList,
   getTagList,
   addingPeople,
+  loadingUpdateCard,
 }) => {
   const [modalOpened, setModalOpened] = useState(false);
   const [updateData, setUpdateData] = useState(item);
@@ -25,9 +26,9 @@ const KanbanCard = ({
     setUpdateData(updateData);
   }, [updateData]);
 
-  const tagsComponent = updateData?.card_tag.map((tag, i) => {
+  const tagsComponent = updateData?.card_tag.map((tag) => {
     return (
-      <Tag color="#EF3355" style={{borderRadius: 12}} key={i}>
+      <Tag color="#EF3355" style={{borderRadius: 12}} key={tag.id}>
         <span className="tag-title">{tag.tag}</span>
       </Tag>
     );
@@ -58,7 +59,7 @@ const KanbanCard = ({
   const memberComponent = updateData?.card_people.map((member, i) => {
     return (
       <>
-        <span style={{color: "#1e2235"}} key={i}>
+        <span style={{color: "#1e2235"}} key={member.id}>
           {member.people}
           {i < updateData.card_people.length - 1 && (
             <Divider type="vertical" style={{background: "#562BF7"}} />
@@ -96,7 +97,7 @@ const KanbanCard = ({
             </div>
           </div>
           {updateData?.card_people && (
-            <div className="member" style={{width: "100%"}}>
+            <div className="member" style={{width: "100%", overflow: "hidden"}}>
               {updateData?.card_people && (
                 <span style={{color: "#A1A3A8", overflow: "hidden"}}>
                   Member: {memberComponent}
@@ -120,6 +121,7 @@ const KanbanCard = ({
         uniquePeopleList={uniquePeopleList}
         getTagList={getTagList}
         addingPeople={addingPeople}
+        loadingUpdateCard={loadingUpdateCard}
       />
     </>
   );
