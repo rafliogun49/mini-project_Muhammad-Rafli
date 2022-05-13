@@ -1,7 +1,7 @@
 import {Button, Col, DatePicker, InputNumber, message, Modal, Row, Select, Space} from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 const {Option} = Select;
 
@@ -47,6 +47,8 @@ const InputModal = ({
   addingPeople,
   loadingUpdateCard,
 }) => {
+  const [listPeople, setListPeople] = useState(updateData.card_people.map((v) => v.people));
+  const [listTag, setListTag] = useState(updateData.card_tag.map((v) => v.tag));
   const handleOk = () => {
     setModalOpened(!handleOk);
     updateTask(
@@ -55,6 +57,16 @@ const InputModal = ({
       updateData.description,
       updateData.date,
       updateData.status
+    );
+    updateTags(
+      updateData.id,
+      listTag,
+      updateData.card_tag.map((v) => v.tag)
+    );
+    updatePeoples(
+      updateData.id,
+      listPeople,
+      updateData.card_people.map((v) => v.people)
     );
     updateLoading();
   };
@@ -99,22 +111,14 @@ const InputModal = ({
   };
 
   const handleChangeMember = (value) => {
-    updatePeoples(
-      updateData.id,
-      value,
-      updateData.card_people.map((v) => v.people)
-    );
+    setListPeople(value);
   };
 
   const handleChangeTag = (value) => {
     if (value.length > 2) {
       alert();
     } else {
-      updateTags(
-        updateData.id,
-        value,
-        updateData.card_tag.map((v) => v.tag)
-      );
+      setListTag(value);
     }
   };
 

@@ -2,13 +2,12 @@
 
 body {
   font-family: "Inter", sans-serif;
+  background-color: #fff;
 }
 .col-secondary {
   color: #1e2235;
 }
-.kanban-board {
-  padding: 1rem;
-}
+
 .card-title {
   font-size: 1rem;
   font-weight: 700;
@@ -18,6 +17,7 @@ body {
   color: #fff;
   padding: 4px 8px;
   font-weight: 700;
+  align-items: center;
 }
 
 .flex {
@@ -52,6 +52,10 @@ body {
   width: 100%;
 }
 
+.title {
+  padding: 1rem 2rem;
+}
+
 .modal {
   border-radius: 8px;
 }
@@ -69,4 +73,71 @@ body {
   .column {
     min-width: 250px;
   }
+}
+
+.landing-page {
+  background-image: url(../src/assets/Gambar.png);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  background-size: cover;
+  min-height: 100vh;
+}
+
+.title-big {
+  font-size: 3.2rem;
+  color: white;
+  max-width: 45vw;
+  font-weight: 700;
+  text-align: center;
+}
+
+@media (max-width: 1000px) {
+  .title-big {
+    font-size: 3rem;
+    max-width: 60vw;
+  }
+}
+
+@media (max-width: 700px) {
+  .title-big {
+    font-size: 1.5rem;
+    max-width: 80vw;
+  }
+}
+
+.image {
+  max-width: 65vw;
+}
+
+@media (max-width: 500px) {
+  .image {
+    max-width: 80vw;
+  }
+}
+
+.tasks-container {
+  padding: 3rem;
+  background: #f9fbfc;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.title-tag {
+  justify-content: space-between;
+}
+
+.tag-container {
+  display: flex;
+  gap: 0.5rem;
+  overflow: hidden;
+}
+
+.label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
 }

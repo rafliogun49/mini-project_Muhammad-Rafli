@@ -1,4 +1,4 @@
-import {Divider, Space, Tag} from "antd";
+import {Divider, Space, Spin, Tag} from "antd";
 import {CalendarOutlined, RiseOutlined} from "@ant-design/icons";
 import {useEffect, useState} from "react";
 import InputModal from "./InputModal";
@@ -16,6 +16,7 @@ const KanbanCard = ({
   getTagList,
   addingPeople,
   loadingUpdateCard,
+  loadingUpdateStatus,
 }) => {
   const [modalOpened, setModalOpened] = useState(false);
   const [updateData, setUpdateData] = useState(item);
@@ -71,42 +72,44 @@ const KanbanCard = ({
 
   return (
     <>
-      <div className="kanban-card" onClick={changeViewModal}>
-        <Space direction="vertical" size={4} style={{display: "flex"}}>
-          <div className="tags" style={{display: "flex", gap: "2px"}}>
-            {updateData?.card_tag && tagsComponent}
-          </div>
+      <Spin spinning={loadingUpdateStatus}>
+        <div className="kanban-card" onClick={changeViewModal}>
+          <Space direction="vertical" size={4} style={{display: "flex"}}>
+            <div className="tags" style={{display: "flex", gap: "2px"}}>
+              {updateData?.card_tag && tagsComponent}
+            </div>
 
-          <h4 className="card-title col-secondary">{updateData.title}</h4>
-          <div className="date-n-priority flex">
-            <div className="date">
-              {updateData.date && (
-                <Space size={8}>
-                  <CalendarOutlined style={{color: "#A1A3A8"}} />
-                  <span style={{color: "#1e2235"}}>{convertMonth(updateData.date)}</span>
-                </Space>
-              )}
+            <h4 className="card-title col-secondary">{updateData.title}</h4>
+            <div className="date-n-priority flex">
+              <div className="date">
+                {updateData.date && (
+                  <Space size={8}>
+                    <CalendarOutlined style={{color: "#A1A3A8"}} />
+                    <span style={{color: "#1e2235"}}>{convertMonth(updateData.date)}</span>
+                  </Space>
+                )}
+              </div>
+              <div className="priority">
+                {updateData.priority && (
+                  <Space size={8}>
+                    <RiseOutlined style={{color: "green"}} />
+                    <span style={{color: "green"}}>{updateData.priority}</span>
+                  </Space>
+                )}
+              </div>
             </div>
-            <div className="priority">
-              {updateData.priority && (
-                <Space size={8}>
-                  <RiseOutlined style={{color: "green"}} />
-                  <span style={{color: "green"}}>{updateData.priority}</span>
-                </Space>
-              )}
-            </div>
-          </div>
-          {updateData?.card_people && (
-            <div className="member" style={{width: "100%", overflow: "hidden"}}>
-              {updateData?.card_people && (
-                <span style={{color: "#A1A3A8", overflow: "hidden"}}>
-                  Member: {memberComponent}
-                </span>
-              )}
-            </div>
-          )}
-        </Space>
-      </div>
+            {updateData?.card_people && (
+              <div className="member" style={{width: "100%", overflow: "hidden"}}>
+                {updateData?.card_people && (
+                  <span style={{color: "#A1A3A8", overflow: "hidden"}}>
+                    Member: {memberComponent}
+                  </span>
+                )}
+              </div>
+            )}
+          </Space>
+        </div>
+      </Spin>
       <InputModal
         modalOpened={modalOpened}
         setModalOpened={setModalOpened}

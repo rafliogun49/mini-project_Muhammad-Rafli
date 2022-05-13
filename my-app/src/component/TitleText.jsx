@@ -5,7 +5,9 @@ const TitleText = () => {
   return (
     <>
       <Title>
-        <span className="col-secondary">Software Development Alterra</span>
+        <span className="col-secondary" style={{background: "#fff"}}>
+          Kanban Board
+        </span>
       </Title>
     </>
   );

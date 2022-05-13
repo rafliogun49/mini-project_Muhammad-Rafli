@@ -4,13 +4,16 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "antd/dist/antd.css";
+import {BrowserRouter} from "react-router-dom";
 import {ApolloProvider} from "@apollo/client";
 import client from "./graphql/client";
 
 ReactDOM.render(
   <ApolloProvider client={client}>
     <React.StrictMode>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </React.StrictMode>
   </ApolloProvider>,
   document.getElementById("root")

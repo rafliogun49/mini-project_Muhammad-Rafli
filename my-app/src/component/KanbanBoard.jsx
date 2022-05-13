@@ -3,6 +3,8 @@ import KanbanCard from "./KanbanCard";
 import NewTask from "./NewTask";
 import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
 import {useEffect, useState} from "react";
+import {DoubleRightOutlined} from "@ant-design/icons";
+import {Link} from "react-router-dom";
 
 //ngambilin data berdasarkan kolomnya
 const KanbanBoard = ({
@@ -19,21 +21,28 @@ const KanbanBoard = ({
   getTagList,
   addingPeople,
   loadingUpdateCard,
+  loadingUpdateStatus,
 }) => {
   const [columns, setColumns] = useState({});
   // bagian items di variabel columnsKanban ini ga mau update data setiap ada perubahan di dataTask
   useEffect(() => {
     const columnsKanban = {
-      todo: {name: "Todo", items: dataTask?.filter((data) => data.status === "Todo")},
+      todo: {name: "Todo", items: dataTask?.filter((data) => data.status === "Todo"), url: "todo"},
       inProgress: {
         name: "In Progress",
         items: dataTask?.filter((data) => data.status === "In Progress"),
+        url: "progress",
       },
       review: {
         name: "Review",
         items: dataTask?.filter((data) => data.status === "Review"),
+        url: "review",
       },
-      done: {name: "Done", items: dataTask?.filter((data) => data.status === "Done")},
+      done: {
+        name: "Done",
+        items: dataTask?.filter((data) => data.status === "Done"),
+        url: "done",
+      },
     };
     setColumns(columnsKanban);
   }, [dataTask]);
@@ -47,8 +56,8 @@ const KanbanBoard = ({
       const sourceItems = [...sourceColumn.items];
       const destinationItems = [...destinationColumn.items];
       const [removed] = sourceItems.splice(source.index, 1);
-      updateStatusTask(removed.id, destinationColumn.name);
       destinationItems.splice(destination.index, 0, removed);
+      updateStatusTask(removed.id, destinationColumn.name);
       setColumns({
         ...columns,
         [source.droppableId]: {
@@ -83,13 +92,15 @@ const KanbanBoard = ({
         {Object.entries(columns).map(([id, column]) => {
           return (
             <div className="column" key={id}>
-              <div className="title-column">
+              <div className="flex">
                 <h2>
                   {column.name} {column.items.length}
                 </h2>
-
-                <Divider style={{backgroundColor: "#562BF7"}} />
+                <Link to={"/showtasks/" + column.url}>
+                  <DoubleRightOutlined style={{color: "#A1A3A8"}} />
+                </Link>
               </div>
+              <Divider style={{backgroundColor: "#562BF7"}} />
               {/* masangin fitur drop di kolom */}
               <Droppable droppableId={id} key={id}>
                 {(provided, snapshot) => {
@@ -97,7 +108,7 @@ const KanbanBoard = ({
                     <div
                       {...provided.droppableProps}
                       ref={provided.innerRef}
-                      style={{minHeight: 300, background: snapshot.isDraggingOver && "#F0F4F6"}}
+                      style={{minHeight: 400, background: snapshot.isDraggingOver && "#F0F4F6"}}
                     >
                       {/* looping setiap card di kolomnya, terus dipakein fitur drag cardnya */}
                       {column.items.map((item, i) => {
@@ -111,6 +122,7 @@ const KanbanBoard = ({
                                   {...provided.dragHandleProps}
                                 >
                                   <KanbanCard
+                                    key={item.id}
                                     item={item}
                                     dataTask={dataTask}
                                     updateTask={updateTask}
@@ -122,6 +134,7 @@ const KanbanBoard = ({
                                     getTagList={getTagList}
                                     addingPeople={addingPeople}
                                     loadingUpdateCard={loadingUpdateCard}
+                                    loadingUpdateStatus={loadingUpdateStatus}
                                   />
                                 </div>
                               );
