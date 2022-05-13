@@ -1,5 +1,5 @@
 import {useQuery} from "@apollo/client";
-import {Col, Divider, Row, Space, Tag} from "antd";
+import {Col, Divider, Row, Space, Spin, Tag} from "antd";
 import {useParams} from "react-router-dom";
 import Navbar from "../component/Navbar";
 import QueryByStatus from "../graphql/QueryByStatus";
@@ -27,7 +27,19 @@ const ShowTask = () => {
   });
 
   if (loading) {
-    return "loading";
+    return (
+      <div
+        style={{
+          width: "100vw",
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Spin size="large" />
+      </div>
+    );
   }
 
   if (error) {

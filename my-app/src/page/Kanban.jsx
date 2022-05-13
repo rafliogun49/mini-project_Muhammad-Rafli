@@ -24,8 +24,8 @@ const {Header, Content, Footer} = Layout;
 const Kanban = () => {
   //query
   const {data: dataTask, loading, error} = useQuery(QueryCard);
-  const {data: peoplesData, loading: loadingPeoples} = useQuery(QueryPeople);
-  const {data: tagsData, loading: loadingTags} = useQuery(QueryTag);
+  const {data: peoplesData, loading: loadingPeoples, error: errorPeoples} = useQuery(QueryPeople);
+  const {data: tagsData, loading: loadingTags, error: errorTags} = useQuery(QueryTag);
   //query data from people and tags
   const uniquePeopleList = peoplesData?.people;
   const getTagList = tagsData?.tag;
@@ -77,7 +77,7 @@ const Kanban = () => {
       </div>
     );
   }
-  if (error) {
+  if (error || errorPeoples || errorTags) {
     return `error: ${error}`;
   }
 

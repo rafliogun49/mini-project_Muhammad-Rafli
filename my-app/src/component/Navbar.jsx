@@ -45,7 +45,9 @@ const Navbar = ({button, transparent}) => {
         zIndex: 1,
         width: "100%",
         background: transparent ? "rgba(0, 0, 0, 0.2)" : "#fff",
-        borderBottom: "2px solid A1A3A8",
+        borderBottom: "1px solid #fff",
+        boxShadow:
+          "0px 100px 164px rgba(161, 163, 168, 0.07), 0px 59.1541px 70.6355px rgba(161, 163, 168, 0.046866), 0px 37.1205px 31.3395px rgba(161, 163, 168, 0.0373569), 0px 20.699px 14.5893px rgba(161, 163, 168, 0.0298769), 0px 8.35347px 5.65038px rgba(161, 163, 168, 0.0211696)",
       }}
     >
       <div
