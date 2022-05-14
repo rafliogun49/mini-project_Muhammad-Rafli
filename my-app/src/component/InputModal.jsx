@@ -1,7 +1,7 @@
 import {Button, Col, DatePicker, InputNumber, message, Modal, Row, Select, Space} from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 const {Option} = Select;
 
@@ -41,11 +41,8 @@ const InputModal = ({
   deleteTask,
   updateTags,
   updatePeoples,
-  loadingDeleteTask,
   uniquePeopleList,
   getTagList,
-  addingPeople,
-  loadingUpdateCard,
 }) => {
   const [listPeople, setListPeople] = useState(updateData.card_people.map((v) => v.people));
   const [listTag, setListTag] = useState(updateData.card_tag.map((v) => v.tag));

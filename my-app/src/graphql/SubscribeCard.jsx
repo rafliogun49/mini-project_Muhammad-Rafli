@@ -1,22 +1,20 @@
 import {gql} from "@apollo/client";
 
 const SubscribeCard = gql`
-  subscription SubscribeData {
+  subscription MySubscription {
     card {
+      card_people {
+        people
+      }
+      card_tag {
+        tag
+      }
       date
       description
       id
       priority
+      status
       title
-      card_tag {
-        tag
-      }
-      card_status {
-        status
-      }
-      card_people {
-        people
-      }
     }
   }
 `;

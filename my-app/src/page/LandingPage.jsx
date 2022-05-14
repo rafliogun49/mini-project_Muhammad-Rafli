@@ -1,5 +1,4 @@
 import {Button} from "antd";
-import Title from "antd/lib/skeleton/Title";
 import Navbar from "../component/Navbar";
 import Hero from "../assets/hero.png";
 import {Link} from "react-router-dom";

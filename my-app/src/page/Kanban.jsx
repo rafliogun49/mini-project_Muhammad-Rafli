@@ -1,9 +1,6 @@
 import {useMutation, useQuery, useSubscription} from "@apollo/client";
-import {Button, message, Spin} from "antd";
-import {useEffect, useState} from "react";
-import Filter from "../component/Filter";
+import {Spin} from "antd";
 import KanbanBoard from "../component/KanbanBoard";
-import KanbanCard from "../component/KanbanCard";
 import TitleText from "../component/TitleText";
 import AddData from "../graphql/AddData";
 import AddPeople from "../graphql/AddPeople";
@@ -17,21 +14,18 @@ import QueryTag from "../graphql/QueryTag";
 import SubscribeCard from "../graphql/SubscribeCard";
 import UpdateCard from "../graphql/UpdateCard";
 import UpdateStatus from "../graphql/UpdateStatus";
-import {Layout, Menu, Breadcrumb} from "antd";
+import {Layout} from "antd";
 import Navbar from "../component/Navbar";
-const {Header, Content, Footer} = Layout;
+const {Content} = Layout;
 
 const Kanban = () => {
   //query
-  const {data: dataTask, loading, error} = useQuery(QueryCard);
+  const {data: dataTask, loading, error} = useSubscription(SubscribeCard);
   const {data: peoplesData, loading: loadingPeoples, error: errorPeoples} = useQuery(QueryPeople);
   const {data: tagsData, loading: loadingTags, error: errorTags} = useQuery(QueryTag);
   //query data from people and tags
   const uniquePeopleList = peoplesData?.people;
   const getTagList = tagsData?.tag;
-  // useEffect(() => dataTask, [dataTask]);
-  // useEffect(() => peoplesData, [peoplesData]);
-  // useEffect(() => tagsData, [tagsData]);
 
   // mutation
   const [addData, {loading: loadingAddTask}] = useMutation(AddData, {
@@ -61,6 +55,8 @@ const Kanban = () => {
   const [deleteTag] = useMutation(DeleteTag, {
     refetchQueries: [QueryCard],
   });
+
+  // const {data: subscribeData, loading: loadingSubscribeData} = useSubscription(SubscribeCard);
 
   if (loading || loadingPeoples || loadingTags) {
     return (

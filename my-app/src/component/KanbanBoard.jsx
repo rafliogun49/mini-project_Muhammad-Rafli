@@ -1,4 +1,4 @@
-import {Row, Col, Divider, Tooltip} from "antd";
+import {Divider, Tooltip} from "antd";
 import KanbanCard from "./KanbanCard";
 import NewTask from "./NewTask";
 import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
@@ -24,7 +24,6 @@ const KanbanBoard = ({
   loadingUpdateStatus,
 }) => {
   const [columns, setColumns] = useState({});
-  const [newData, setNewData] = useState(dataTask); //dataTask ini Query dari Cardnya
   // bagian items di variabel columnsKanban ini ga mau update data setiap ada perubahan di dataTask
   useEffect(() => {
     const columnsKanban = {
@@ -91,6 +90,7 @@ const KanbanBoard = ({
       <div className="board">
         {/* ngelooping setiap kolomnya */}
         {Object.entries(columns).map(([id, column]) => {
+          console.log(column);
           return (
             <div className="column" key={id}>
               <div className="flex">
@@ -127,7 +127,6 @@ const KanbanBoard = ({
                                   <KanbanCard
                                     key={item.id}
                                     item={item}
-                                    newData={newData}
                                     updateTask={updateTask}
                                     deleteTask={deleteTask}
                                     updateTags={updateTags}

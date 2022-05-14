@@ -67,7 +67,7 @@ const ShowTask = () => {
                   xl={8}
                   key={eachData.id}
                 >
-                  <div className="kanban-card">
+                  <div className="kanban-card outlined">
                     <Space size="middle" direction="vertical" style={{display: "flex"}}>
                       <h4 style={{fontSize: "1.2rem", fontWeight: 600}}>{eachData.title}</h4>
                       {eachData.card_tag && (
