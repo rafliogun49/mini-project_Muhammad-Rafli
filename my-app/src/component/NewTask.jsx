@@ -5,7 +5,7 @@ import {useState} from "react";
 const NewTask = ({addTask, name}) => {
   const [addNewTask, setAddNewTask] = useState(false);
   const loadingMessage = () => {
-    message.loading("Sedang diupload");
+    message.loading("Currently adding new task");
   };
   const [title, setTitle] = useState("");
   const changeNewTaskStatus = () => {

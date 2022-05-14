@@ -90,7 +90,6 @@ const KanbanBoard = ({
       <div className="board">
         {/* ngelooping setiap kolomnya */}
         {Object.entries(columns).map(([id, column]) => {
-          console.log(column);
           return (
             <div className="column" key={id}>
               <div className="flex">

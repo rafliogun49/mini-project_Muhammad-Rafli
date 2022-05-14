@@ -24,13 +24,13 @@ const extractTagValue = (val) => {
 };
 
 const updateLoading = () => {
-  message.loading("Sedang memperbaharui data");
+  message.loading("Updating task");
 };
 const loadingDelete = () => {
-  message.loading("Sedang menghapus task");
+  message.loading("Remove task");
 };
 const alert = () => {
-  message.error("Tag tidak boleh lebih dari 2");
+  message.error("Tag can't more than 2");
 };
 const InputModal = ({
   modalOpened,
@@ -182,7 +182,7 @@ const InputModal = ({
               <div className="date">
                 <span style={{display: "block"}}>Date</span>
                 <DatePicker
-                  defaultValue={updateData.date ? moment(updateData.date, "DD/MM/YYYY") : moment()}
+                  value={updateData.date ? moment(updateData.date, "DD/MM/YYYY") : null}
                   format={"YYYY/MM/DD"}
                   style={{minWidth: "50%"}}
                   onChange={handleChangeDate}
@@ -214,7 +214,7 @@ const InputModal = ({
                   <InputNumber
                     min={1}
                     max={10}
-                    defaultValue={1}
+                    defaultValue={null}
                     style={{minWidth: "50%"}}
                     name="priority"
                     onChange={handleChangePriority}
