@@ -1,4 +1,4 @@
-import {Row, Col, Divider} from "antd";
+import {Row, Col, Divider, Tooltip} from "antd";
 import KanbanCard from "./KanbanCard";
 import NewTask from "./NewTask";
 import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
@@ -97,7 +97,9 @@ const KanbanBoard = ({
                   {column.name} {column.items.length}
                 </h2>
                 <Link to={"/showtasks/" + column.url}>
-                  <DoubleRightOutlined style={{color: "#A1A3A8"}} />
+                  <Tooltip title="Buka detail">
+                    <DoubleRightOutlined style={{color: "#A1A3A8"}} />
+                  </Tooltip>
                 </Link>
               </div>
               <Divider style={{backgroundColor: "#562BF7"}} />
