@@ -29,9 +29,9 @@ const Kanban = () => {
   //query data from people and tags
   const uniquePeopleList = peoplesData?.people;
   const getTagList = tagsData?.tag;
-  useEffect(() => dataTask, [dataTask]);
-  useEffect(() => peoplesData, [peoplesData]);
-  useEffect(() => tagsData, [tagsData]);
+  // useEffect(() => dataTask, [dataTask]);
+  // useEffect(() => peoplesData, [peoplesData]);
+  // useEffect(() => tagsData, [tagsData]);
 
   // mutation
   const [addData, {loading: loadingAddTask}] = useMutation(AddData, {

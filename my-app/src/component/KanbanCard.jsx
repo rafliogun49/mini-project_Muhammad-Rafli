@@ -4,9 +4,7 @@ import {useEffect, useState} from "react";
 import InputModal from "./InputModal";
 const KanbanCard = ({
   item,
-  tagList,
-  peopleList,
-  dataTask,
+  newData,
   updateTask,
   deleteTask,
   updateTags,
@@ -115,7 +113,7 @@ const KanbanCard = ({
         setModalOpened={setModalOpened}
         updateData={updateData}
         setUpdateData={setUpdateData}
-        dataTask={dataTask}
+        newData={newData}
         updateTask={updateTask}
         deleteTask={deleteTask}
         updateTags={updateTags}

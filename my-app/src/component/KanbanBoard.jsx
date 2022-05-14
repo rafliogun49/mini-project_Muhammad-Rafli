@@ -24,6 +24,7 @@ const KanbanBoard = ({
   loadingUpdateStatus,
 }) => {
   const [columns, setColumns] = useState({});
+  const [newData, setNewData] = useState(dataTask); //dataTask ini Query dari Cardnya
   // bagian items di variabel columnsKanban ini ga mau update data setiap ada perubahan di dataTask
   useEffect(() => {
     const columnsKanban = {
@@ -126,7 +127,7 @@ const KanbanBoard = ({
                                   <KanbanCard
                                     key={item.id}
                                     item={item}
-                                    dataTask={dataTask}
+                                    newData={newData}
                                     updateTask={updateTask}
                                     deleteTask={deleteTask}
                                     updateTags={updateTags}
