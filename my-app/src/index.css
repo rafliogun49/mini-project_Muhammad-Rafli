@@ -148,3 +148,12 @@ body {
 .outlined {
   border: 1px solid rgb(161, 163, 168);
 }
+
+.not-found-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}

@@ -97,7 +97,7 @@ const KanbanBoard = ({
                   {column.name} {column.items.length}
                 </h2>
                 <Link to={"/showtasks/" + column.url}>
-                  <Tooltip title="Buka detail">
+                  <Tooltip title="Open details">
                     <DoubleRightOutlined style={{color: "#A1A3A8"}} />
                   </Tooltip>
                 </Link>
@@ -117,6 +117,7 @@ const KanbanBoard = ({
                         return (
                           <Draggable key={item.id} draggableId={String(item.id)} index={i}>
                             {(provided, snapshot) => {
+                              console.log(item.id);
                               return (
                                 <div
                                   ref={provided.innerRef}
