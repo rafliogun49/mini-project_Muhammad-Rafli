@@ -1,5 +1,5 @@
 import {useQuery} from "@apollo/client";
-import {Col, Divider, Row, Space, Spin, Tag} from "antd";
+import {Divider, Row, Spin} from "antd";
 import {useParams} from "react-router-dom";
 import Navbar from "../component/Navbar";
 import TaskCard from "../component/TaskCard";
