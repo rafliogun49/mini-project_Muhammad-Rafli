@@ -13,7 +13,7 @@ const httpLink = new HttpLink({
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: "ws://kanban-board.hasura.app/v1/graphql",
+    url: "wss://kanban-board.hasura.app/v1/graphql",
     connectionParams: {
       headers: {
         "x-hasura-admin-secret": "60bmkqoiYLqDH4SNZq0QeN3OK6jw5KaBVlmJUR5sf9rPeD2e5HGNr71NTo0NpE7K",
