@@ -117,12 +117,12 @@ const KanbanBoard = ({
                         return (
                           <Draggable key={item.id} draggableId={String(item.id)} index={i}>
                             {(provided, snapshot) => {
-                              console.log(item.id);
                               return (
                                 <div
                                   ref={provided.innerRef}
                                   {...provided.draggableProps}
                                   {...provided.dragHandleProps}
+                                  key={item.id}
                                 >
                                   <KanbanCard
                                     key={item.id}
