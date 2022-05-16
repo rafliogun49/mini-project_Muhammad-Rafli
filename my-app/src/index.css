@@ -11,6 +11,7 @@ body {
 .card-title {
   font-size: 1rem;
   font-weight: 700;
+  overflow: hidden;
 }
 .tag-title {
   font-size: 0.8rem;
@@ -69,7 +70,7 @@ body {
 .column {
   min-width: calc(100vw / 4 - 2.5rem);
 }
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   .column {
     min-width: 250px;
   }

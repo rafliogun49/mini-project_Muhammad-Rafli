@@ -1,4 +1,4 @@
-import {useQuery} from "@apollo/client";
+import {useSubscription} from "@apollo/client";
 import {Divider, Row, Spin} from "antd";
 import {useParams} from "react-router-dom";
 import Navbar from "../component/Navbar";
@@ -21,7 +21,7 @@ const ShowTask = () => {
     title = "Not Found";
   }
 
-  const {data, loading, error} = useQuery(QueryByStatus, {
+  const {data, loading, error} = useSubscription(QueryByStatus, {
     variables: {
       _eq: title,
     },

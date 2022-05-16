@@ -19,7 +19,7 @@ const NewTask = ({addTask, name}) => {
   const addingNewTask = (e) => {
     e.preventDefault();
     if (!title) {
-      message.error("Judul tidak boleh kosong");
+      message.error("Title cannot be empty");
     } else {
       addTask(title, name);
       loadingMessage();
